@@ -22,8 +22,7 @@ class ProductTile extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
               image: DecorationImage(
-                image: NetworkImage(
-                    "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"),
+                image: AssetImage("assets/images/semangka.jpeg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -96,7 +95,6 @@ class ProductTile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(width: 10),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: SizedBox(

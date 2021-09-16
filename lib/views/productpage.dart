@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:twiscode_test/views/producttile.dart';
+import 'package:get/get.dart';
+import 'package:twiscode_test/views/orderpage.dart';
+import 'package:twiscode_test/views/items_layout/producttile.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -16,7 +18,17 @@ class _ProductPageState extends State<ProductPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    offset: const Offset(0.0, 5.0),
+                    blurRadius: 5.0,
+                  ),
+                ],
+              ),
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
@@ -26,14 +38,19 @@ class _ProductPageState extends State<ProductPage> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  Badge(
-                    badgeContent: const Text(
-                      '3',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    child: const Icon(
-                      Icons.shopping_cart,
-                      color: Colors.black87,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(const OrderPage());
+                    },
+                    child: Badge(
+                      badgeContent: const Text(
+                        '3',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.black87,
+                      ),
                     ),
                   )
                 ],
