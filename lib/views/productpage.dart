@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:twiscode_test/views/producttile.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -41,19 +42,17 @@ class _ProductPageState extends State<ProductPage> {
             Expanded(
               child: Container(
                 color: Colors.grey[200],
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     crossAxisCount: 2,
+                    childAspectRatio: 0.6,
                   ),
                   itemCount: 300,
                   itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      color: Colors.amber,
-                      child: Center(child: Text('$index')),
-                    );
+                    return const ProductTile();
                   },
                 ),
               ),
@@ -75,11 +74,11 @@ class _ProductPageState extends State<ProductPage> {
                 onTap: () {},
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.list_rounded),
+                  children: [
+                    const Icon(Icons.list_rounded),
                     Text(
                       "Category",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.blue.shade900),
                     )
                   ],
                 ),
@@ -89,11 +88,11 @@ class _ProductPageState extends State<ProductPage> {
                 onTap: () {},
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.filter_list_rounded),
+                  children: [
+                    const Icon(Icons.filter_list_rounded),
                     Text(
                       "Filter",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.blue.shade900),
                     )
                   ],
                 ),
