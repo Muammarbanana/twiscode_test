@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:twiscode_test/models/order.dart';
 import 'package:twiscode_test/models/product.dart';
 import 'package:twiscode_test/views/items_layout/ordertile.dart';
 
@@ -15,6 +16,26 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _count = 0;
+    final orderListNew = <Order>[].obs;
+
+    for (final e in orderList) {
+      orderListNew.add(Order(
+        e.id,
+        e.title,
+        e.price,
+        e.location,
+        e.user,
+        e.halal,
+        e.weight,
+        1.0,
+      ));
+    }
+
+    void _update(int count) {
+      setState(() => _count = count);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -50,7 +71,7 @@ class _OrderPageState extends State<OrderPage> {
                 ],
               ),
             ),
-            showMainOrderLayout(orderList),
+            showMainOrderLayout(orderListNew),
             Visibility(
               visible: orderList.isNotEmpty,
               child: Align(
@@ -83,9 +104,9 @@ class _OrderPageState extends State<OrderPage> {
                               style: TextStyle(
                                   color: Colors.blue.shade900, fontSize: 18),
                             ),
-                            const Text(
-                              "Rp. 200.000",
-                              style: TextStyle(
+                            Text(
+                              getTotalPrice(orderListNew).toString(),
+                              style: const TextStyle(
                                 color: Colors.amber,
                                 fontSize: 18,
                               ),
@@ -114,7 +135,7 @@ class _OrderPageState extends State<OrderPage> {
     );
   }
 
-  Widget showMainOrderLayout(List<Product> orderList) {
+  Widget showMainOrderLayout(List<Order> orderListNew) {
     if (orderList.isEmpty) {
       return const Expanded(
         child: Center(
@@ -140,15 +161,26 @@ class _OrderPageState extends State<OrderPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: orderList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return OrderTile(orderList[index]);
-              },
+            child: Obx(
+              () => ListView.builder(
+                itemCount: orderList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return OrderTile(orderListNew[index]);
+                },
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  String getTotalPrice(List<Order> orderListNew) {
+    int total = 0;
+    for (final e in orderListNew) {
+      final pricePerItem = e.itemCount.round() * int.parse(e.price);
+      total = total + pricePerItem;
+    }
+    return "Rp. $total";
   }
 }

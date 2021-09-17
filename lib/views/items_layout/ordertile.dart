@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:twiscode_test/models/product.dart';
+import 'package:twiscode_test/models/order.dart';
 
-class OrderTile extends StatelessWidget {
-  final Product product;
+class OrderTile extends StatefulWidget {
+  final Order product;
   const OrderTile(this.product);
 
   @override
+  _OrderTileState createState() => _OrderTileState();
+}
+
+class _OrderTileState extends State<OrderTile> {
+  @override
   Widget build(BuildContext context) {
-    String weight = product.weight;
+    String weight = widget.product.weight;
     if (weight == "") {
       weight = "0";
     }
+    double totalWeight = widget.product.getTotalWeight();
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       child: Container(
@@ -39,7 +45,7 @@ class OrderTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.title,
+                      widget.product.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -53,7 +59,7 @@ class OrderTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product.price,
+                              widget.product.price,
                               style: const TextStyle(color: Colors.orange),
                             ),
                             const Text(
@@ -65,22 +71,36 @@ class OrderTile extends StatelessWidget {
                         Column(
                           children: [
                             Row(
-                              children: const [
-                                Icon(
-                                  Icons.indeterminate_check_box_rounded,
-                                  color: Colors.red,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.product.decrease();
+                                    setState(() {});
+                                  },
+                                  child: const Icon(
+                                    Icons.indeterminate_check_box_rounded,
+                                    color: Colors.red,
+                                  ),
                                 ),
-                                SizedBox(width: 5),
-                                Text("2"),
-                                SizedBox(width: 5),
-                                Icon(
-                                  Icons.add_box_rounded,
-                                  color: Colors.green,
+                                const SizedBox(width: 5),
+                                Text(widget.product.itemCount
+                                    .round()
+                                    .toString()),
+                                const SizedBox(width: 5),
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.product.increase();
+                                    setState(() {});
+                                  },
+                                  child: const Icon(
+                                    Icons.add_box_rounded,
+                                    color: Colors.green,
+                                  ),
                                 )
                               ],
                             ),
                             Text(
-                              "$weight kg",
+                              "$totalWeight kg",
                               style: TextStyle(color: Colors.blue.shade900),
                             )
                           ],
