@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:twiscode_test/models/product.dart';
 
 class OrderTile extends StatelessWidget {
-  const OrderTile({Key? key}) : super(key: key);
+  final Product product;
+  const OrderTile(this.product);
 
   @override
   Widget build(BuildContext context) {
+    String weight = product.weight;
+    if (weight == "") {
+      weight = "0";
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       child: Container(
@@ -33,7 +39,7 @@ class OrderTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Semangka Segar Sekali Beli Satu Gratis Lima",
+                      product.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -45,12 +51,12 @@ class OrderTile extends StatelessWidget {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
-                              "Rp. 10.000",
-                              style: TextStyle(color: Colors.orange),
+                              product.price,
+                              style: const TextStyle(color: Colors.orange),
                             ),
-                            Text(
+                            const Text(
                               "(Baru)",
                               style: TextStyle(color: Colors.grey),
                             )
@@ -74,7 +80,7 @@ class OrderTile extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "1.0 kg",
+                              "$weight kg",
                               style: TextStyle(color: Colors.blue.shade900),
                             )
                           ],

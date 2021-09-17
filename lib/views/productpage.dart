@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twiscode_test/controllers/productscontroller.dart';
+import 'package:twiscode_test/models/product.dart';
 import 'package:twiscode_test/views/orderpage.dart';
 import 'package:twiscode_test/views/items_layout/producttile.dart';
 
@@ -14,6 +15,8 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final ProductController productController = Get.put(ProductController());
+  List<Product> orders = <Product>[].obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,16 +45,19 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(const OrderPage());
+                      Get.to(const OrderPage(), arguments: orders);
                     },
-                    child: Badge(
-                      badgeContent: const Text(
-                        '3',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      child: const Icon(
-                        Icons.shopping_cart,
-                        color: Colors.black87,
+                    child: Obx(
+                      () => Badge(
+                        showBadge: (orders.isEmpty) ? false : true,
+                        badgeContent: Text(
+                          orders.length.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
                   )
@@ -73,7 +79,20 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                     itemCount: productController.listProduct.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ProductTile(productController.listProduct[index]);
+                      return Material(
+                        child: InkWell(
+                            splashColor: Colors.grey,
+                            onTap: () {
+                              final productitem =
+                                  productController.listProduct[index];
+                              if (!orders.contains(productitem)) {
+                                orders
+                                    .add(productController.listProduct[index]);
+                              }
+                            },
+                            child: ProductTile(
+                                productController.listProduct[index])),
+                      );
                     },
                   ),
                 ),
