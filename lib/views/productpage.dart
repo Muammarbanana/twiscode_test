@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:twiscode_test/controllers/productscontroller.dart';
 import 'package:twiscode_test/views/orderpage.dart';
 import 'package:twiscode_test/views/items_layout/producttile.dart';
 
@@ -12,6 +13,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,17 +62,20 @@ class _ProductPageState extends State<ProductPage> {
               child: Container(
                 color: Colors.grey[200],
                 padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.6,
+                child: Obx(
+                  () => GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.6,
+                    ),
+                    itemCount: productController.listProduct.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProductTile(productController.listProduct[index]);
+                    },
                   ),
-                  itemCount: 300,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const ProductTile();
-                  },
                 ),
               ),
             )

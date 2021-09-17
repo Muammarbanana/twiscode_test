@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:twiscode_test/models/product.dart';
 
 class ProductTile extends StatelessWidget {
-  const ProductTile({Key? key}) : super(key: key);
+  final Product product;
+  const ProductTile(this.product);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -30,7 +31,7 @@ class ProductTile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Semangka Segar Sekali Beli Satu Gratis Lima",
+              product.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -42,66 +43,79 @@ class ProductTile extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8, right: 8),
             child: Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Rp. 20.000",
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_rounded,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Surabaya",
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Hendrawan",
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                    Card(
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          "Ready Stock",
-                          style: TextStyle(color: Colors.white),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.price,
+                        style: const TextStyle(
+                          color: Colors.orange,
+                          fontSize: 16,
                         ),
                       ),
-                    )
-                  ],
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on_rounded,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              product.location,
+                              style: const TextStyle(color: Colors.grey),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              product.user,
+                              style: const TextStyle(color: Colors.grey),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        ],
+                      ),
+                      Card(
+                        color: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            "Ready Stock",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image(
-                      image: AssetImage("assets/images/halal.png"),
+                Visibility(
+                  visible: product.halal == "1",
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image(
+                        image: AssetImage("assets/images/halal.png"),
+                      ),
                     ),
                   ),
                 )

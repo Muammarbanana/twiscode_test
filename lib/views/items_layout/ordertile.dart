@@ -16,17 +16,14 @@ class OrderTile extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              SizedBox(
+              Container(
                 height: 58,
                 width: 58,
-                child: Hero(
-                  tag: "",
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: const Image(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/images/semangka.jpeg"),
-                    ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/images/semangka.jpeg"),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
