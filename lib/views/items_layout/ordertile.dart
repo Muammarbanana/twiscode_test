@@ -14,7 +14,7 @@ class _OrderTileState extends State<OrderTile> {
   Widget build(BuildContext context) {
     String weight = widget.product.weight;
     if (weight == "") {
-      weight = "0";
+      weight = "0.0";
     }
     double totalWeight = widget.product.getTotalWeight();
     return Padding(

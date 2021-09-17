@@ -22,7 +22,10 @@ class Order extends Product {
   double itemCount;
 
   double getTotalWeight() {
-    return itemCount * double.parse(weight);
+    if (weight != "") {
+      return itemCount * double.parse(weight);
+    }
+    return 0;
   }
 
   int getTotalPrice() {
