@@ -4,6 +4,7 @@ import 'package:twiscode_test/network_utils/api.dart';
 
 class ProductController extends GetxController {
   var listProduct = <Product>[].obs;
+  var isLoading = true.obs;
 
   @override
   void onInit() {
@@ -13,8 +14,9 @@ class ProductController extends GetxController {
 
   Future<void> getProduct() async {
     final products = await Api.getProduct();
-    if (products != null) {
-      listProduct.value = products;
+    if (products != null && products is! String) {
+      listProduct.value = products as List<Product>;
     }
+    isLoading(false);
   }
 }

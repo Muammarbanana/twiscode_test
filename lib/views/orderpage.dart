@@ -125,27 +125,30 @@ class _OrderPageState extends State<OrderPage> {
         ),
       );
     }
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            "Produk yang akan Anda pesan",
-            style: TextStyle(
-              color: Colors.blue.shade900,
-              fontSize: 16,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Produk yang akan Anda pesan",
+              style: TextStyle(
+                color: Colors.blue.shade900,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: orderList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return OrderTile(orderList[index]);
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: orderList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return OrderTile(orderList[index]);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

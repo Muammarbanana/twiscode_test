@@ -69,32 +69,47 @@ class _ProductPageState extends State<ProductPage> {
                 color: Colors.grey[200],
                 padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: Obx(
-                  () => GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.6,
-                    ),
-                    itemCount: productController.listProduct.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Material(
-                        child: InkWell(
-                            splashColor: Colors.grey,
-                            onTap: () {
-                              final productitem =
-                                  productController.listProduct[index];
-                              if (!orders.contains(productitem)) {
-                                orders
-                                    .add(productController.listProduct[index]);
-                              }
-                            },
-                            child: ProductTile(
-                                productController.listProduct[index])),
+                  () {
+                    if (productController.isLoading.value) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    },
-                  ),
+                    } else if (productController.listProduct.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "Terjadi Kesalahan Saat Mengambil Data",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      );
+                    } else {
+                      return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.6,
+                        ),
+                        itemCount: productController.listProduct.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Material(
+                            child: InkWell(
+                                splashColor: Colors.grey,
+                                onTap: () {
+                                  final productitem =
+                                      productController.listProduct[index];
+                                  if (!orders.contains(productitem)) {
+                                    orders.add(
+                                        productController.listProduct[index]);
+                                  }
+                                },
+                                child: ProductTile(
+                                    productController.listProduct[index])),
+                          );
+                        },
+                      );
+                    }
+                  },
                 ),
               ),
             )

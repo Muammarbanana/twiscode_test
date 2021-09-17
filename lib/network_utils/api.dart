@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:twiscode_test/models/product.dart';
 
@@ -5,14 +7,15 @@ import 'package:twiscode_test/models/product.dart';
 class Api {
   static http.Client client = http.Client();
 
-  static Future<List<Product>?> getProduct() async {
+  static Future<dynamic> getProduct() async {
     final response = await client.post(Uri.parse(
         'https://ranting.twisdev.com/index.php/rest/items/search/api_key/teampsisthebest/'));
+    final jsonBody = response.body;
     if (response.statusCode == 200) {
-      final jsonBody = response.body;
       return productFromJson(jsonBody);
     } else {
-      return null;
+      final decodedJson = json.decode(jsonBody);
+      return decodedJson['message'] as String;
     }
   }
 }
