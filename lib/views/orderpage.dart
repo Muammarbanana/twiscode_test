@@ -32,10 +32,6 @@ class _OrderPageState extends State<OrderPage> {
       ));
     }
 
-    void _update(int count) {
-      setState(() => _count = count);
-    }
-
     return Scaffold(
       body: SafeArea(
         child: Column(
